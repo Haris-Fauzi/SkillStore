@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->text('description')->nullable();
 
-            $table->string('thumbnail')->nullable();
+            $table->string('thumbnails')->nullable();
 
             $table->string('file_project')->nullable();
             

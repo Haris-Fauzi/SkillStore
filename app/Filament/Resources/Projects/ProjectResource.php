@@ -13,7 +13,8 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
+use Filament\Tables\Table;  
+use App\Filament\Resources\Projects\RelationManagers\ScreenshotsRelationManager;
 
 class ProjectResource extends Resource
 {
@@ -37,6 +38,7 @@ class ProjectResource extends Resource
     {
         return [
             //
+            ScreenshotsRelationManager::class,
         ];
     }
 

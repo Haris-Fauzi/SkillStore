@@ -8,6 +8,8 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\Placeholder;
 
 class ProjectForm
 {
@@ -19,9 +21,14 @@ class ProjectForm
                     ->relationship('category', 'category_name')
                     ->searchable()
                     ->required(),
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 TextInput::make('title')
                     ->required(),
-                Textarea::make('deskripsi')
+                Textarea::make('description')
                     ->columnSpanFull(),
 
                 TextInput::make('version')
@@ -55,10 +62,12 @@ class ProjectForm
                     //     'application/pdf',
                     // ]),
 
-                FileUpload::make('thumbnail')
-                    ->label('Thumbnail')
+                FileUpload::make('thumbnails')
+                    ->label('Thumbnails')
                     ->image()
                     ->directory('thumbnails')
+                    ->disk('public')
+                    ->visibility('public')
                     ->imageEditor(),
 
                 Select::make('status')

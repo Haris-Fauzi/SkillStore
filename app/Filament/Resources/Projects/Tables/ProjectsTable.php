@@ -13,6 +13,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Actions\Action;
 
 class ProjectsTable
 {
@@ -21,10 +22,17 @@ class ProjectsTable
         return $table
             ->columns([
 
-            ImageColumn::make('thumbnail')
+            ImageColumn::make('thumbnails')
                 ->label('Thumbnail')
+                ->getStateUsing(fn ($record) => asset('storage/' . $record->thumbnails))
                 ->rounded()
                 ->square(),
+
+            TextColumn::make('screenshots_count')
+                ->label('Screenshot')
+                ->counts('screenshots')
+                ->badge()
+                ->sortable(),
 
             TextColumn::make('title')
                 ->searchable()
@@ -51,10 +59,11 @@ class ProjectsTable
                 ->badge()
                 ->sortable()
                 ->color(fn (string $state): string => match ($state) {
-                    'draft' => 'warning',
-                    'published' => 'success',
-                    'archived' => 'danger',
-                    default => 'warning',
+                    'Draft' => 'warning',
+                    'Pending' => 'info',
+                    'Published' => 'success',
+                    'Rejected' => 'danger',
+                    default => 'gray',
                 }),
 
             TextColumn::make('created_at')
@@ -75,16 +84,37 @@ class ProjectsTable
             ->filters([
                 //
                 SelectFilter::make('status')
-                    ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
-                        'archived' => 'Archived',
-                    ]),
+                ->options([
+                    'Draft' => 'Draft',
+                    'Pending' => 'Pending',
+                    'Published' => 'Published',
+                    'Rejected' => 'Rejected',
+                ]),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
                 ViewAction::make(),
+
+                EditAction::make(),
+
+                Action::make('publish')
+                    ->label('Publish')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->visible(fn ($record) => $record->status !== 'Published')
+                    ->action(fn ($record) => $record->update([
+                        'status' => 'Published',
+                    ])),
+
+                Action::make('reject')
+                    ->label('Reject')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->visible(fn ($record) => $record->status !== 'Rejected')
+                    ->action(fn ($record) => $record->update([
+                        'status' => 'Rejected',
+                    ])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

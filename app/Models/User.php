@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
 #[Fillable([
     'identity_number',
@@ -21,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
     'role', 
     'status'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory */
     use HasFactory, Notifiable;
@@ -50,6 +52,11 @@ class User extends Authenticatable
     public function teacherProfile(): HasOne
     {
         return $this->hasOne(TeacherProfile::class);
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
 
     // Role Helpers
@@ -106,6 +113,11 @@ class User extends Authenticatable
     public function hasCompletedProfile(): bool
     {
         return $this->profile()?->is_profile_complete ?? false;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->isAdmin();
     }
 
 }

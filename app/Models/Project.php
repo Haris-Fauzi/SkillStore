@@ -13,10 +13,10 @@ class Project extends Model
 
     protected $fillable = [
         'title',
-        'deskripsi',
+        'description',
         'category_id',
-        'siswa_id',
-        'thumbnail',
+        'user_id',
+        'thumbnails',
         'file_project',
         'status',
         'version',
@@ -34,6 +34,11 @@ class Project extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';
@@ -48,5 +53,16 @@ class Project extends Model
         static::updating(function ($project) {
             $project->slug = Str::slug($project->title);
         });
+    }
+
+    public function getVersionLabelAttribute(): string
+    {
+        return 'v'.$this->version;
+    }
+
+    public function screenshots()
+    {
+        return $this->hasMany(ProjectScreenshot::class)
+            ->orderBy('sort_order');
     }
 }

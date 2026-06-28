@@ -36,8 +36,8 @@ class HomeController extends Controller
         if ($request->search) {
             $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
-                ->orWhere('deskripsi', 'like', '%' . $request->search . '%')
-                ->orWhereHas('siswa', function ($q2) use ($request) {
+                ->orWhere('description', 'like', '%' . $request->search . '%')
+                ->orWhereHas('user', function ($q2) use ($request) {
                     $q2->where('name', 'like', '%' . $request->search . '%');
                 });
             });

@@ -34,7 +34,7 @@
     @foreach($latestProjects as $project)
         <div>
             <h3>{{ $project->title }}</h3>
-            <p>{{ $project->siswa->nama }}</p>
+            {{-- <p>{{ $project->siswa->nama }}</p> --}}
         </div>
     @endforeach
 
