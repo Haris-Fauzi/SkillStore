@@ -32,7 +32,7 @@ return new class extends Migration
 
             $table->string('year')->nullable();
 
-            $table->string('status')->default('Draft');
+            $table->string('status')->default('Pending');
 
             $table->unsignedInteger('download_count')->default(0);
 

@@ -1,126 +1,146 @@
-<form method="POST" action="{{ route('student-profile.update') }}">
-    @csrf
-    @method('PUT')
+@extends('layouts.frontend')
 
-    <div class="mb-4">
-        <x-input-label for="identity_number" value="Nomor Identitas Registrasi" />
-
-        <x-text-input
-            id="identity_number"
-            class="block mt-1 w-full"
-            :value="auth()->user()->identity_number"
-            disabled />
+@section('content')
+<div class="bg-white border-b border-slate-100 py-3.5 px-4 sm:px-6 lg:px-8 sticky top-0 z-40 backdrop-blur-md bg-white/90">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xs font-black">
+                S
+            </div>
+            <span class="text-xs font-black text-slate-900 tracking-tight">
+                SkillStore <span class="text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded-md ml-1">Workspace</span>
+            </span>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="{{ route('dashboard') }}" class="text-xs font-bold text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
+                📊 Dashboard Utama
+            </a>
+            <span class="text-slate-200">|</span>
+            <a href="{{ url('/') }}" class="text-xs font-bold text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
+                🏠 Beranda
+            </a>
+        </div>
     </div>
+</div>
 
-    <div class="mb-4">
-        <x-input-label for="nis" value="NIS" />
+<div class="py-8 bg-slate-50/50 min-h-[90vh]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-white border border-slate-100 rounded-3xl shadow-sm overflow-hidden p-6 sm:p-8">
+            <div class="mb-6 border-b border-slate-100 pb-4 flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-lg flex-shrink-0">
+                    👤
+                </div>
+                <div>
+                    <h3 class="text-base font-black text-slate-800 tracking-tight">Kelola Profil Siswa</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">Lengkapi data identitas akademi Anda untuk memvalidasi kepemilikan akun di SkillStore.</p>
+                </div>
+            </div>
 
-        <x-text-input
-            id="nis"
-            class="block mt-1 w-full"
-            type="text"
-            name="nis"
-            :value="old(
-                'nis',
-                $studentProfile->nis ?? auth()->user()->identity_number
-            )"
-            required />
+            <form method="POST" action="{{ route('student-profile.update') }}" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-        <x-input-error :messages="$errors->get('nis')" class="mt-2" />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nomor Identitas Registrasi</label>
+                        <input type="text" value="{{ auth()->user()->identity_number }}" disabled
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-400 bg-slate-50 border border-slate-200 rounded-xl cursor-not-allowed">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor Induk Siswa (NIS) <span class="text-rose-500">*</span></label>
+                        <input type="text" name="nis" value="{{ old('nis', $studentProfile->nis ?? auth()->user()->identity_number) }}" required
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('nis') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition">
+                        @error('nis')
+                            <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nama Lengkap Akun</label>
+                        <input type="text" value="{{ auth()->user()->name }}" disabled
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-400 bg-slate-50 border border-slate-200 rounded-xl cursor-not-allowed">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Jurusan <span class="text-rose-500">*</span></label>
+                        <input type="text" name="major" value="{{ old('major', $studentProfile->major ?? '') }}" placeholder="Contoh: Rekayasa Perangkat Lunak" required
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('major') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition placeholder-slate-300">
+                        @error('major')
+                            <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kelas <span class="text-rose-500">*</span></label>
+                        <input type="text" name="class" value="{{ old('class', $studentProfile->class ?? '') }}" placeholder="Contoh: XII RPL 2" required
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('class') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition placeholder-slate-300">
+                        @error('class')
+                            <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor Telepon / WhatsApp <span class="text-rose-500">*</span></label>
+                        <input type="text" name="phone" value="{{ old('phone', $studentProfile->phone ?? '') }}" placeholder="Contoh: 081234567890" required
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('phone') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition placeholder-slate-300">
+                        @error('phone')
+                            <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tanggal Lahir <span class="text-rose-500">*</span></label>
+                        <input type="date" name="birth_date" value="{{ old('birth_date', $studentProfile->birth_date ?? '') }}" required
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('birth_date') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition">
+                        @error('birth_date')
+                            <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Alamat Tempat Tinggal <span class="text-rose-500">*</span></label>
+                        <input type="text" name="address" value="{{ old('address', $studentProfile->address ?? '') }}" placeholder="Tuliskan nama jalan, rt/rw, dan kota..." required
+                               class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('address') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition placeholder-slate-300">
+                        @error('address')
+                            <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="md:col-span-2 border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                        <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Unggah Foto Profil</label>
+                        
+                        @if(isset($studentProfile) && $studentProfile->photo)
+                            <div class="mb-3 flex items-center gap-3">
+                                <img src="{{ asset('storage/' . $studentProfile->photo) }}" class="w-14 h-14 object-cover rounded-full border border-slate-200 shadow-sm" alt="Avatar">
+                                <p class="text-[10px] text-slate-400">💡 Biarkan kosong jika tidak ingin mengganti foto saat ini.</p>
+                            </div>
+                        @endif
+
+                        <input type="file" name="photo" accept="image/*"
+                               class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition cursor-pointer">
+                        @error('photo')
+                            <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="md:col-span-2 flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                        <a href="{{ route('dashboard') }}"
+                           class="inline-flex items-center justify-center px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl transition">
+                            Batal
+                        </a>
+                        <button type="submit"
+                                class="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition shadow-sm shadow-blue-500/10">
+                            💾 Simpan Profil
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
     </div>
-
-    <div class="mb-4">
-        <x-input-label for="name" value="Nama Lengkap" />
-
-        <x-text-input
-            id="name"
-            class="block mt-1 w-full"
-            :value="auth()->user()->name"
-            disabled />
-    </div>
-
-    <div class="mb-4">
-        <x-input-label for="major" value="Jurusan" />
-
-        <x-text-input
-            id="major"
-            class="block mt-1 w-full"
-            type="text"
-            name="major"
-            :value="old('major', $studentProfile->major ?? '')"
-            required />
-
-        <x-input-error :messages="$errors->get('major')" class="mt-2" />
-    </div>
-
-    <div class="mb-4">
-        <x-input-label for="class" value="Kelas" />
-
-        <x-text-input
-            id="class"
-            class="block mt-1 w-full"
-            type="text"
-            name="class"
-            :value="old('class', $studentProfile->class ?? '')"
-            required />
-
-        <x-input-error :messages="$errors->get('class')" class="mt-2" />
-    </div>
-
-    <div class="mb-4">
-        <x-input-label for="address" value="Alamat" />
-
-        <x-text-input
-            id="address"
-            class="block mt-1 w-full"
-            type="text"
-            name="address"
-            :value="old('address', $studentProfile->address ?? '')"
-            required />
-
-        <x-input-error :messages="$errors->get('address')" class="mt-2" />
-    </div>
-
-    <div class="mb-4">
-        <x-input-label for="phone" value="Nomor Telepon" />
-
-        <x-text-input
-            id="phone"
-            class="block mt-1 w-full"
-            type="text"
-            name="phone"
-            :value="old('phone', $studentProfile->phone ?? '')"
-            required />
-
-        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-    </div>
-    
-    <div class="mb-4">
-        <x-input-label for="birth_date" value="Tanggal Lahir" />
-
-        <x-text-input
-            id="birth_date"
-            class="block mt-1 w-full"
-            type="date"
-            name="birth_date"
-            :value="old('birth_date', $studentProfile->birth_date ?? '')"
-            required />
-
-        <x-input-error :messages="$errors->get('birth_date')" class="mt-2" />
-    </div>
-
-    <div class="mb-4">
-        <x-input-label for="photo" value="Foto Profil" />
-
-        <x-text-input
-            id="photo"
-            class="block mt-1 w-full"
-            type="file"
-            name="photo"
-            :value="old('photo', $studentProfile->photo ?? '')" />
-    </div>
-
-    <x-primary-button>
-        Simpan Profil
-    </x-primary-button>
-</form>
+</div>
+@endsection

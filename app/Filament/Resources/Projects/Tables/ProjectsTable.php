@@ -14,6 +14,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Actions\Action;
+// use Fillament\Actions\ActionGroup;
 
 class ProjectsTable
 {
@@ -40,10 +41,15 @@ class ProjectsTable
 
             TextColumn::make('version')
                 ->label('Versi')
+                ->badge()
+                ->formatStateUsing(fn ($state) => 'v' . $state)
+                ->color('gray')
                 ->sortable(),
 
             TextColumn::make('category.category_name')
-                ->label('Category')
+                ->label('Kategori')
+                ->badge()
+                ->color('primary')
                 ->searchable()
                 ->sortable(),
 
@@ -59,12 +65,17 @@ class ProjectsTable
                 ->badge()
                 ->sortable()
                 ->color(fn (string $state): string => match ($state) {
-                    'Draft' => 'warning',
-                    'Pending' => 'info',
+                    'Pending' => 'warning',
                     'Published' => 'success',
                     'Rejected' => 'danger',
                     default => 'gray',
                 }),
+                // ->icon(fn (string $state): string => match ($state) {
+                //     'published' => 'heroicon-o-check-circle',
+                //     'pending'   => 'heroicon-o-clock',
+                //     'rejected'  => 'heroicon-o-x-circle',
+                //     default     => 'heroicon-o-question-mark-circle',
+                // }),
 
             TextColumn::make('created_at')
                 ->label('Dibuat')
@@ -85,16 +96,18 @@ class ProjectsTable
                 //
                 SelectFilter::make('status')
                 ->options([
-                    'Draft' => 'Draft',
                     'Pending' => 'Pending',
                     'Published' => 'Published',
                     'Rejected' => 'Rejected',
                 ]),
             ])
+
+            ->emptyStateHeading('Belum ada project')
+            ->emptyStateDescription('Project yang ditambahkan akan muncul di sini.')
+            ->emptyStateIcon('heroicon-o-folder-open')
+
             ->recordActions([
                 ViewAction::make(),
-
-                EditAction::make(),
 
                 Action::make('publish')
                     ->label('Publish')
@@ -115,7 +128,11 @@ class ProjectsTable
                     ->action(fn ($record) => $record->update([
                         'status' => 'Rejected',
                     ])),
+                
+                EditAction::make(),
+                DeleteAction::make()
             ])
+            
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

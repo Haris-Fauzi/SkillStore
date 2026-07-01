@@ -1,42 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SkillStore</title>
-</head>
-<body>
+{{-- @extends('layouts.frontend')
 
-    <h1>SkillStore</h1>
+@section('content')
+    <x-home.navbar />
 
-    <p>Tempat publikasi karya siswa.</p>
+    <x-home.hero />
 
-    <a href="/projects">
-        Lihat Project
-    </a>
+    <x-home.statistics :data="$statistics" />
 
-    <hr>
+    <x-home.categories />
 
-    <h2>⭐ Project Unggulan</h2>
+    <x-home.featured-project :featured="$featuredProjects" :latest="$latestProjects" />
 
-    @forelse($featuredProjects as $project)
-        <div>
-            <a href="/projects/{{ $project->slug }}">
-                {{ $project->title }}
-            </a>
-        </div>
-    @empty
-        <p>Belum ada project unggulan.</p>
-    @endforelse
-
-    <hr>
-
-    <h2>Project Terbaru</h2>
-
-    @foreach($latestProjects as $project)
-        <div>
-            <h3>{{ $project->title }}</h3>
-            {{-- <p>{{ $project->siswa->nama }}</p> --}}
-        </div>
-    @endforeach
-
-</body>
-</html>
+    <x-home.footer />
+@endsection --}}

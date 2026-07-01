@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use App\Notifications\NewUserRegisteredNotification;
+use Illuminate\Support\Facades\Log;
 
 class RegisteredUserController extends Controller
 {
@@ -46,6 +48,43 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        
+
+$admins = User::where('role', 'admin')->get();
+
+foreach ($admins as $admin) {
+    // Ambil URL halaman Filament yang dituju (misal: UserResource halaman Index atau Edit)
+    // Sesuaikan nama Resource Anda jika berbeda, misal: UserResource::getUrl('index')
+    $targetUrl = \App\Filament\Resources\Users\UserResource::getUrl('index'); 
+
+    $admin->notifications()->create([
+        'id' => \Illuminate\Support\Str::uuid(),
+        'type' => 'Filament\\Notifications\\DatabaseNotification',
+        'data' => [
+            'title' => 'User Baru Mendaftar',
+            'body' => "{$user->name} telah mendaftar dan menunggu persetujuan.",
+            'icon' => 'heroicon-o-user-plus',
+            'color' => 'success',
+            'duration' => null,
+            'format' => 'filament',
+            
+            // Trik utama: Tambahkan array actions bawaan Filament agar muncul tombol klik
+            'actions' => [
+                [
+                    'name' => 'view_user',
+                    'label' => 'Lihat & Approve', // Tulisan di tombol notifikasi
+                    'url' => $targetUrl,          // Link tujuan ketika diklik
+                    'color' => 'success',
+                    'icon' => 'heroicon-m-eye',
+                    'shouldOpenInNewTab' => false,
+                    'view' => 'filament-notifications::actions.button-action',
+                ]
+            ],
+        ],
+        'read_at' => null,
+    ]);
+}
 
         // Auth::login($user);
 

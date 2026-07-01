@@ -10,15 +10,6 @@ use App\Http\Controllers\Public\ProjectController as PublicProjectController;
 Route::get('/', [PublicProjectController::class, 'index'])
     ->name('home');
 
-// Route::get('/projects', [HomeController::class, 'projects'])
-//     ->name('projects.index');
-
-// Route::get('/projects/{project}', [HomeController::class, 'showProject'])
-//     ->name('projects.show');
-
-// Route::get('/projects/{project}/download', [HomeController::class, 'downloadProject'])
-//     ->name('projects.download');
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', function () {

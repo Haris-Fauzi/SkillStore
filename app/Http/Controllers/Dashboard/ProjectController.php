@@ -74,6 +74,13 @@ class ProjectController extends Controller
 
         }
 
+        $admins = \App\Models\User::where('role', 'admin')->get();
+
+        // 3. Tembakkan notifikasi menggunakan class yang baru dibuat
+        foreach ($admins as $admin) {
+            $admin->notify(new \App\Notifications\NewProjectCreatedNotification($project));
+        }
+
         return redirect()
             ->route('dashboard.projects.index')
             ->with('success', 'Project berhasil dibuat.');

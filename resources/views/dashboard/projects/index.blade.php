@@ -1,173 +1,180 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Project Saya
-        </h2>
-    </x-slot>
+@extends('layouts.frontend')
 
-    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6">
+@section('content')
+<!-- 1. TOP BAR INTERNAL MINIMALIS (SINKRON DENGAN DASHBOARD UTAMA) -->
+<div class="bg-white border-b border-slate-100 py-3.5 px-4 sm:px-6 lg:px-8 sticky top-0 z-40 backdrop-blur-md bg-white/90">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xs font-black">
+                S
+            </div>
+            <span class="text-xs font-black text-slate-900 tracking-tight">
+                SkillStore <span class="text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded-md ml-1">Workspace</span>
+            </span>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="{{ route('dashboard') }}" class="text-xs font-bold text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
+                📊 Dashboard Utama
+            </a>
+            <span class="text-slate-200">|</span>
+            <a href="{{ url('/') }}" class="text-xs font-bold text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
+                🏠 Beranda Utama
+            </a>
+        </div>
+    </div>
+</div>
 
-            <div class="flex items-center justify-between">
-
+<div class="py-8 bg-slate-50/50 min-h-[90vh]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        
+        <!-- 2. HEADER MANAJEMEN PROJECT -->
+        <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-xl shadow-sm shadow-blue-500/5">
+                    📦
+                </div>
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-                        Project Saya
+                    <h2 class="text-lg font-black text-slate-900 tracking-tight">
+                        Manajemen Project Saya
                     </h2>
-
-                    <p class="mt-2 text-gray-600 dark:text-gray-300">
-                        Anda memiliki <strong>{{ $projects->total() }}</strong> project.
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        Kelola, publikasikan, atau perbarui semua berkas source code yang telah kamu bagikan.
                     </p>
                 </div>
-
-                <a href="{{ route('dashboard.projects.create') }}"
-                    class="rounded-lg bg-purple-600 px-4 py-2 text-white hover:bg-purple-700">
-
-                    + Upload Project
-
-                </a>
-
             </div>
-
+            <div>
+                <a href="{{ route('dashboard.projects.create') }}"
+                    class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-md shadow-blue-500/10 w-full sm:w-auto">
+                    ✨ Upload Project Baru
+                </a>
+            </div>
         </div>
-    </div>
-    @if ($projects->isEmpty())
 
-        <div class="mt-6 rounded-lg border-2 border-dashed border-gray-300 p-10 text-center">
-
-            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                Belum ada project
-            </h3>
-
-            <p class="mt-2 text-gray-500">
-                Mulailah mengunggah project pertama Anda.
-            </p>
-
+        <!-- RINGKASAN RINGKAS JUMLAH DATA -->
+        <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm shadow-slate-100/30 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-sm">
+                    📊
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-slate-700">
+                        Total Koleksi: <span class="text-blue-600 font-black">{{ $projects->total() }}</span> project aktif terdaftar
+                    </p>
+                </div>
+            </div>
         </div>
-    @else
-    <div class="mt-6 overflow-hidden rounded-lg bg-white shadow dark:bg-gray-800">
 
-        <table class="min-w-full">
+        <!-- KONDISI JIKA DATA PROYEK MASIH KOSONG -->
+        @if ($projects->isEmpty())
+            <div class="rounded-3xl border border-dashed border-slate-200 bg-white p-12 text-center shadow-sm">
+                <div class="w-14 h-14 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-xl mb-4">
+                    📁
+                </div>
+                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                    Belum Ada Project Terdaftar
+                </h3>
+                <p class="mt-2 text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+                    Karyamu berhak dilihat dunia! Mulailah mengunggah hasil karya pemrograman terbaikmu sekarang juga.
+                </p>
+                <div class="mt-5">
+                    <a href="{{ route('dashboard.projects.create') }}" 
+                       class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 font-bold text-xs rounded-xl transition">
+                        Mulai Upload ↗
+                    </a>
+                </div>
+            </div>
+        @else
+            <!-- TABEL DATA PREMIUM (SLATE THEME) -->
+            <div class="bg-white border border-slate-100 rounded-3xl shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-4 bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Project</th>
+                                <th class="px-6 py-4 bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Kategori</th>
+                                <th class="px-6 py-4 bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unduhan</th>
+                                <th class="px-6 py-4 bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-xs">
+                            @foreach ($projects as $project)
+                                <tr class="hover:bg-slate-50/40 transition">
+                                    <!-- Kolom Judul & Gambar Cover -->
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-4">
+                                            <div class="h-12 w-12 rounded-xl overflow-hidden bg-slate-100 border border-slate-100 flex-shrink-0">
+                                                @if($project->thumbnails)
+                                                    <img src="{{ asset('storage/' . $project->thumbnails) }}" alt="{{ $project->title }}" class="h-full w-full object-cover">
+                                                @else
+                                                    <div class="h-full w-full flex items-center justify-center text-slate-300 bg-slate-50">🖼️</div>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <div class="font-black text-slate-800 tracking-tight line-clamp-1">{{ $project->title }}</div>
+                                                <div class="text-[10px] text-slate-400 font-medium mt-0.5">Diperbarui {{ $project->updated_at->diffForHumans() }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
 
-            <thead class="bg-gray-100 dark:bg-gray-700">
+                                    <!-- Kolom Badge Kategori -->
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                                            {{ optional($project->category)->category_name ?? 'General' }}
+                                        </span>
+                                    </td>
 
-                <tr>
-                    <th class="px-6 py-3 text-left">
-                        Thumbnail
-                    </th>
+                                    <!-- Kolom Status Penerbitan -->
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if ($project->status === 'Published')
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[10px]">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Published
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 font-bold text-[10px]">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Pending
+                                            </span>
+                                        @endif
+                                    </td>
 
-                    <th class="px-6 py-3 text-left">
-                        Judul
-                    </th>
+                                    <!-- Kolom Kaunter Download -->
+                                    <td class="px-6 py-4 whitespace-nowrap font-bold text-slate-700">
+                                        📥 {{ number_format($project->download_count ?? 0) }} <span class="text-[10px] text-slate-400 font-normal">kali</span>
+                                    </td>
 
-                    <th class="px-6 py-3 text-left">
-                        Kategori
-                    </th>
+                                    <!-- Kolom Tombol Mutasi Konten -->
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <div class="flex items-center justify-end gap-2">
+                                            <a href="{{ route('dashboard.projects.edit', $project) }}"
+                                                class="inline-flex items-center justify-center px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold text-[11px] rounded-lg transition">
+                                                Edit
+                                            </a>
 
-                    <th class="px-6 py-3 text-left">
-                        Status
-                    </th>
-
-                    <th class="px-6 py-3 text-left">
-                        Terakhir Diperbarui
-                    </th>
-
-                    <th class="px-6 py-3 text-left">
-                        Download
-                    </th>
-
-                    <th class="px-6 py-3 text-left">
-                        Aksi
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                @foreach ($projects as $project)
-
-                    <tr class="border-t">
-                        <td class="px-6 py-4">
-
-                            <img src="{{ asset('storage/' . $project->thumbnails) }}" alt="{{ $project->title }}" class="h-16 w-16 rounded-lg object-cover">
-
-                        </td>
-
-                        <td class="px-6 py-4">
-
-                            {{ $project->title }}
-
-                        </td>
-
-                        <td class="px-6 py-4">
-
-                            {{ $project->category->category_name }}
-                        </td>
-
-                        <td class="px-6 py-4">
-
-                            @if ($project->status === 'Published')
-                                <span class="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-800">
-                                    Published
-                                </span>
-                            @else
-                                <span class="rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-yellow-800">
-                                    Draft
-                                </span>
-                            @endif
-
-                        </td>
-                        <td class="px-6 py-4">
-
-                        {{ $project->updated_at->diffForHumans() }}
-
-                        </td>
-
-                        <td class="px-6 py-4">
-
-                            {{ $project->download_count }}
-
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('dashboard.projects.edit', $project) }}"
-                                    class="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700">
-                                    Edit
-                                </a>
-
-                                <form
-                                    action="{{ route('dashboard.projects.destroy', $project) }}"
-                                    method="POST"
-                                    class="inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus project ini?')">
-
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button
-                                        type="submit"
-                                        class="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700">
-
-                                        Delete
-
-                                    </button>
-
-                                </form>
-                            </div>
-                        </td>
-
-                    </tr>
-
-                @endforeach
-
-            </tbody>
-
-        </table>
+                                            <form action="{{ route('dashboard.projects.destroy', $project) }}"
+                                                method="POST" class="inline"
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus permanen project ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="inline-flex items-center justify-center px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-[11px] rounded-lg transition">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Paginasi Laravel Custom (Jika ada) -->
+            <div class="mt-4">
+                {{ $projects->links() }}
+            </div>
+        @endif
 
     </div>
-
-    @endif
-</x-app-layout>
+</div>
+@endsection

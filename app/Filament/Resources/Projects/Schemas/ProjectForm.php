@@ -72,10 +72,10 @@ class ProjectForm
 
                 Select::make('status')
                     ->options([
-                        'Draft' => 'Draft',
+                        'Pending' => 'Pending',
                         'Published' => 'Published',
                     ])
-                    ->default('Draft')
+                    ->default('Pending')
                     ->required(),
 
                 Toggle::make('is_featured')
