@@ -1,6 +1,6 @@
 <section>
     <header class="mb-6">
-        <h2 class="text-sm font-black text-slate-800 uppercase tracking-wider">
+        <h2 class="text-sm font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider">
             {{ __('Informasi Akun Dasar') }}
         </h2>
         <p class="mt-1 text-xs text-slate-400">
@@ -21,7 +21,7 @@
                 Nama Pengguna <span class="text-rose-500">*</span>
             </label>
             <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name"
-                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('name') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition">
+                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 rounded-xl border @error('name') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 dark:border-slate-700 transition-colors duration-300 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition">
             @error('name')
                 <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
             @enderror
@@ -32,7 +32,7 @@
                 Alamat Email <span class="text-rose-500">*</span>
             </label>
             <input id="email" name="email" type="email" value="{{ old('email', $user->email) }}" required autocomplete="username"
-                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @error('email') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition">
+                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 rounded-xl border @error('email') border-rose-400 focus:ring-rose-500/10 @else border-slate-200 dark:border-slate-700 transition-colors duration-300 focus:border-blue-500 focus:ring-blue-500/10 @enderror focus:ring-4 transition">
             @error('email')
                 <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $message }}</p>
             @enderror
@@ -57,7 +57,7 @@
 
         <div class="flex items-center gap-4 pt-2">
             <button type="submit" 
-                    class="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition shadow-sm shadow-blue-500/10">
+                    class="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition shadow-sm dark:border-slate-800 shadow-blue-500/10">
                 💾 {{ __('Simpan Perubahan') }}
             </button>
 

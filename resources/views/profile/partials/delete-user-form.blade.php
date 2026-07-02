@@ -11,16 +11,16 @@
     <button type="button"
             x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-            class="inline-flex items-center justify-center px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition shadow-sm shadow-rose-500/10">
+            class="inline-flex items-center justify-center px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition shadow-sm dark:border-slate-800 shadow-rose-500/10">
         ⚠️ {{ __('Hapus Akun Saya') }}
     </button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-white rounded-3xl">
+        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-white dark:bg-slate-950 transition-colors duration-300 rounded-3xl">
             @csrf
             @method('delete')
 
-            <h3 class="text-base font-black text-slate-900 tracking-tight">
+            <h3 class="text-base font-black text-slate-900 dark:text-slate-100 transition-colors duration-300 tracking-tight">
                 {{ __('Apakah Anda benar-benar yakin?') }}
             </h3>
 
@@ -35,7 +35,7 @@
                        name="password"
                        type="password"
                        placeholder="{{ __('Masukkan Kata Sandi Anda') }}"
-                       class="w-full sm:w-3/4 px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @if($errors->userDeletion->get('password')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition placeholder-slate-300" />
+                       class="w-full sm:w-3/4 px-4 py-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 rounded-xl border @if($errors->userDeletion->get('password')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 dark:border-slate-700 transition-colors duration-300 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition placeholder-slate-300" />
 
                 @if($errors->userDeletion->get('password'))
                     <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $errors->userDeletion->first('password') }}</p>

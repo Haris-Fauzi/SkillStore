@@ -1,6 +1,6 @@
 <section>
     <header class="mb-6">
-        <h2 class="text-sm font-black text-slate-800 uppercase tracking-wider">
+        <h2 class="text-sm font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider">
             {{ __('Perbarui Kata Sandi') }}
         </h2>
         <p class="mt-1 text-xs text-slate-400">
@@ -17,7 +17,7 @@
                 Kata Sandi Saat Ini <span class="text-rose-500">*</span>
             </label>
             <input id="update_password_current_password" name="current_password" type="password" autocomplete="current-password"
-                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @if($errors->updatePassword->get('current_password')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition">
+                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 rounded-xl border @if($errors->updatePassword->get('current_password')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 dark:border-slate-700 transition-colors duration-300 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition">
             @if($errors->updatePassword->get('current_password'))
                 <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $errors->updatePassword->first('current_password') }}</p>
             @endif
@@ -28,7 +28,7 @@
                 Kata Sandi Baru <span class="text-rose-500">*</span>
             </label>
             <input id="update_password_password" name="password" type="password" autocomplete="new-password"
-                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @if($errors->updatePassword->get('password')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition">
+                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 rounded-xl border @if($errors->updatePassword->get('password')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 dark:border-slate-700 transition-colors duration-300 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition">
             @if($errors->updatePassword->get('password'))
                 <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $errors->updatePassword->first('password') }}</p>
             @endif
@@ -39,7 +39,7 @@
                 Konfirmasi Kata Sandi Baru <span class="text-rose-500">*</span>
             </label>
             <input id="update_password_password_confirmation" name="password_confirmation" type="password" autocomplete="new-password"
-                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 rounded-xl border @if($errors->updatePassword->get('password_confirmation')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition">
+                   class="w-full px-4 py-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 rounded-xl border @if($errors->updatePassword->get('password_confirmation')) border-rose-400 focus:ring-rose-500/10 @else border-slate-200 dark:border-slate-700 transition-colors duration-300 focus:border-blue-500 focus:ring-blue-500/10 @endif focus:ring-4 transition">
             @if($errors->updatePassword->get('password_confirmation'))
                 <p class="text-[10px] text-rose-500 font-bold mt-1">⚠️ {{ $errors->updatePassword->first('password_confirmation') }}</p>
             @endif
@@ -47,7 +47,7 @@
 
         <div class="flex items-center gap-4 pt-2">
             <button type="submit" 
-                    class="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition shadow-sm shadow-blue-500/10">
+                    class="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition shadow-sm dark:border-slate-800 shadow-blue-500/10">
                 🔒 {{ __('Perbarui Kata Sandi') }}
             </button>
 

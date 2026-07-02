@@ -1,7 +1,12 @@
 @props(['data'])
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/40 p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+    <div class="bg-white dark:bg-slate-900 
+            rounded-2xl 
+            border border-slate-100 dark:border-slate-800 
+            shadow-xl shadow-slate-200/40 dark:shadow-none 
+            p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 
+            divide-y sm:divide-y-0 sm:divide-x divide-slate-100 dark:divide-slate-800">
         
         <!-- Total Project -->
         <div class="flex items-center gap-4 p-3">
@@ -10,7 +15,7 @@
             </div>
             <div>
                 <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Total Project</p>
-                <h3 class="text-xl font-black text-slate-800 mt-0.5">{{ number_format($data['projects'] ?? 0) }}</h3>
+                <h3 class="text-xl font-black text-slate-800 dark:text-slate-200 mt-0.5">{{ number_format($data['projects'] ?? 0) }}</h3>
                 <span class="text-[10px] font-bold text-emerald-500">+12% <span class="text-slate-400 font-normal">dari bulan lalu</span></span>
             </div>
         </div>
@@ -22,7 +27,7 @@
             </div>
             <div>
                 <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Total Download</p>
-                <h3 class="text-xl font-black text-slate-800 mt-0.5">{{ number_format($data['downloads'] ?? 0) }}</h3>
+                <h3 class="text-xl font-black text-slate-800 dark:text-slate-200 mt-0.5">{{ number_format($data['downloads'] ?? 0) }}</h3>
                 <span class="text-[10px] font-bold text-emerald-500">+18% <span class="text-slate-400 font-normal">dari bulan lalu</span></span>
             </div>
         </div>
@@ -34,7 +39,7 @@
             </div>
             <div>
                 <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Total Pengguna</p>
-                <h3 class="text-xl font-black text-slate-800 mt-0.5">{{ number_format($data['members'] ?? 0) }}</h3>
+                <h3 class="text-xl font-black text-slate-800 dark:text-slate-200 mt-0.5">{{ number_format($data['members'] ?? 0) }}</h3>
                 <span class="text-[10px] font-bold text-emerald-500">+8% <span class="text-slate-400 font-normal">dari bulan lalu</span></span>
             </div>
         </div>
@@ -46,7 +51,7 @@
             </div>
             <div>
                 <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Total Kategori</p>
-                <h3 class="text-xl font-black text-slate-800 mt-0.5">{{ number_format($data['categories'] ?? 0) }}</h3>
+                <h3 class="text-xl font-black text-slate-800 dark:text-slate-200 mt-0.5">{{ number_format($data['categories'] ?? 0) }}</h3>
                 <span class="text-[10px] font-bold text-blue-600">+2 <span class="text-slate-400 font-normal">kategori baru</span></span>
             </div>
         </div>

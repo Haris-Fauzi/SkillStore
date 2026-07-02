@@ -35,12 +35,18 @@
     </style>
 </head>
 
-    
-
-</head>
+<script>
+    // Cek apakah user sudah pernah memilih mode gelap sebelumnya
+    if (localStorage.getItem('theme') === 'dark' || 
+       (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+</script>
 
 <body
-    class="min-h-screen bg-[#F6FAFF] text-slate-800 antialiased"
+    class="min-h-screen bg-[#F6FAFF] dark:bg-slate-950 text-slate-800 dark:text-slate-200 antialiased"
     style="font-family:'Plus Jakarta Sans',sans-serif;">
 
     @yield('content')

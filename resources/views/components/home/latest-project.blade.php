@@ -1,6 +1,6 @@
 <section class="py-20">
 
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-[1400px] mx-auto px-6">
 
         <div class="text-center mb-14">
 
@@ -10,13 +10,13 @@
 
             </span>
 
-            <h2 class="mt-2 text-4xl font-bold text-slate-900">
+            <h2 class="mt-2 text-4xl font-bold text-slate-900 dark:text-slate-100 transition-colors duration-300">
 
                 Upload Terbaru
 
             </h2>
 
-            <p class="mt-4 text-slate-500">
+            <p class="mt-4 text-slate-500 dark:text-slate-400 transition-colors duration-300">
 
                 Project yang baru dipublikasikan oleh komunitas.
 
@@ -28,7 +28,7 @@
 
             @foreach($latestProjects as $project)
 
-                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition">
+                <div class="bg-white dark:bg-slate-950 transition-colors duration-300 rounded-3xl p-6 border border-slate-200 dark:border-slate-700 transition-colors duration-300 shadow-sm dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
 
                     <div class="flex items-center gap-4">
 
@@ -40,13 +40,13 @@
 
                         <div>
 
-                            <h3 class="font-bold text-slate-900 line-clamp-1">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100 transition-colors duration-300 line-clamp-1">
 
                                 {{ $project->title }}
 
                             </h3>
 
-                            <p class="text-sm text-slate-500">
+                            <p class="text-sm text-slate-500 dark:text-slate-400 transition-colors duration-300">
 
                                 {{ $project->user->name }}
 
@@ -56,7 +56,7 @@
 
                     </div>
 
-                    <p class="mt-5 text-slate-500 line-clamp-3">
+                    <p class="mt-5 text-slate-500 dark:text-slate-400 transition-colors duration-300 line-clamp-3">
 
                         {{ $project->description }}
 
