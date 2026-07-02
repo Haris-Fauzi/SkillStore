@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Enums\DatabaseNotificationsPosition;
+use Filament\Support\Assets\Asset;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -27,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
+            ->favicon(asset('images/icon S.svg'))
             ->brandName('SkillStore Admin')
             ->path('admin')
             ->sidebarCollapsibleOnDesktop()

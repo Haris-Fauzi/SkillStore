@@ -6,7 +6,7 @@
     <div class="lg:col-span-2">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-lg font-extrabold text-slate-900 dark:text-slate-100 transition-colors duration-300">Project Unggulan</h2>
-            <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1 py-1 px-3 text-xs font-bold text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 rounded-lg transition">
+            <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1 py-1 px-3 text-xs font-bold text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-lg transition">
                 Lihat Semua ➔
             </a>
         </div>

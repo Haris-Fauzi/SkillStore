@@ -47,7 +47,7 @@ class UpdateProjectRequest extends FormRequest
                 'nullable',
                 'file',
                 'mimes:zip',
-                'max:51200',
+                'max:10240',
             ],
 
             'screenshots' => [

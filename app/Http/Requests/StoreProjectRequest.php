@@ -49,7 +49,7 @@ class StoreProjectRequest extends FormRequest
             'file_project' => [
                 'nullable',
                 'file',
-                'max:51200', // 50 MB
+                'max:10240', // 10 MB
             ],
 
             'screenshots' => [
