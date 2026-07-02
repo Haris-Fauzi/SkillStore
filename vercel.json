@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "framework": "laravel",
+    "commands": {
+        "build": "npm run build && php artisan config:cache && php artisan route:cache"
+    },
+    "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ]
+}
