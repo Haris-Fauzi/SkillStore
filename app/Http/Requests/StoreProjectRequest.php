@@ -85,7 +85,7 @@ class StoreProjectRequest extends FormRequest
 
             'thumbnails.max' => 'Ukuran thumbnails maksimal 2 MB.',
 
-            'file_project.max' => 'Ukuran file project maksimal 50 MB.',
+            'file_project.max' => 'Ukuran file project maksimal 10 MB.',
         ];
     }
 }

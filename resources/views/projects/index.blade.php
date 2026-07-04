@@ -11,38 +11,44 @@
     {{-- 3. Bar Statistik --}}
     <x-home.statistics :data="$statistics" />
 
-    {{-- 4. Kategori Populer (Dipastikan posisinya berdiri sendiri di sini) --}}
-    <div class="bg-white dark:bg-slate-950 py-6 transition-colors duration-500">
+    {{-- 4. Kategori Populer --}}
+    <div class="bg-white dark:bg-slate-950 py-6 transition-colors duration-500" id="Category">
         <x-home.categories />
     </div>
 
     {{-- 5. Bagian Grid Project Pilihan & Project Terbaru --}}
-    <x-home.featured-project :featured="$featuredProjects" :latest="$latestProjects" />
+    {{-- MODIFIKASI: Mengubah pb-24 menjadi pb-6 agar jarak ke bawah lebih rapat --}}
+    <div class="pb-6" id="Project">
+        <x-home.featured-project :featured="$featuredProjects" :latest="$latestProjects"/>
+    </div>
 
     {{-- 6. Katalog Project (Explore Projects) --}}
-    <section id="project-list"
-        class="py-16
+    {{-- MODIFIKASI: Mengubah py-16 menjadi pt-10 pb-16 agar pas --}}
+    <section
+        class="pt-10 pb-16
         bg-slate-50 dark:bg-slate-950
         border-t border-b
-        border-slate-100 dark:border-slate-800
+        border-slate-100 dark:border-slate-800/60
         transition-colors duration-500">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="mb-8" id="Project">
-                <h2 class="text-xl font-black text-slate-900 dark:text-slate-100 transition-colors duration-300">Katalog Project</h2>
+            <div class="mb-8">
+                <h2 class="text-xl font-black text-slate-900 dark:text-slate-100 transition-colors duration-300 tracking-tight">Katalog Project</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400 transition-colors duration-300 mt-1">Jelajahi berbagai project terbaik yang telah dipublikasikan oleh siswa dan guru.</p>
             </div>
 
             {{-- Grid Responsif 4 Kolom Berjejer Rapi --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6">
                 @forelse($projects as $project)
-                    <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
+                    {{-- MODIFIKASI: Ditambahkan class 'group' untuk efek hover gambar --}}
+                    <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between group">
                         
                         <div>
                             {{-- Thumbnail Container --}}
-                            <div class="relative aspect-video bg-slate-50 dark:bg-slate-800 border-b border-slate-50 flex items-center justify-center overflow-hidden">
+                            <div class="relative aspect-video bg-slate-50 dark:bg-slate-800 border-b border-slate-50 dark:border-slate-800 flex items-center justify-center overflow-hidden">
                                 @if($project->thumbnails)
-                                    <img src="{{ asset('storage/'.$project->thumbnails) }}" class="w-full h-full object-cover" alt="{{ $project->title }}">
+                                    {{-- MODIFIKASI: Efek zoom gambar halus saat card di-hover --}}
+                                    <img src="{{ asset('storage/'.$project->thumbnails) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $project->title }}">
                                 @else
                                     <div class="w-full h-full flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-300 dark:text-slate-600 p-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 stroke-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,32 +89,14 @@
                         {{-- Tombol Detail & Download --}}
                         <div class="p-4 pt-0 grid grid-cols-2 gap-2">
                             <a href="{{ route('projects.show', $project->slug) }}" class="
-                                inline-flex
-                                items-center
-                                justify-center
-
-                                py-2
-
-                                rounded-xl
-
-                                bg-slate-50
-                                dark:bg-slate-800
-
-                                hover:bg-slate-100
-                                dark:hover:bg-slate-700
-
-                                border
-                                border-slate-200
-                                dark:border-slate-700
-
-                                text-slate-700
-                                dark:text-slate-200
-
-                                font-bold
-                                text-[10px]
-
-                                transition-colors duration-300
-                                ">
+                                inline-flex items-center justify-center
+                                py-2 rounded-xl
+                                bg-slate-50 dark:bg-slate-800
+                                hover:bg-slate-100 dark:hover:bg-slate-700
+                                border border-slate-200 dark:border-slate-700
+                                text-slate-700 dark:text-slate-200
+                                font-bold text-[10px]
+                                transition-colors duration-300">
                                 Detail
                             </a>
                             <a href="{{ route('projects.download', $project->slug) }}" class="inline-flex items-center justify-center py-2 rounded-xl bg-blue-600 hover:bg-blue-700 font-bold text-[10px] dark:hover:bg-blue-400 text-white transition shadow-sm dark:border-slate-800 shadow-blue-500/10">

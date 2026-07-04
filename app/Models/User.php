@@ -21,7 +21,8 @@ use Filament\Panel;
     'email', 
     'password', 
     'role', 
-    'status'])]
+    'status',
+    ])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser
 {

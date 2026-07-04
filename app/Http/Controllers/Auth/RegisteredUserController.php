@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use App\Notifications\NewUserRegisteredNotification;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -49,47 +49,62 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        
+        // ================= STRATEGI DIRECT INSERT DATABASE =================
+        // 1. Ambil semua ID user yang rolenya 'admin'
+        $adminIds = User::where('role', 'admin')->pluck('id');
 
-$admins = User::where('role', 'admin')->get();
+        if ($adminIds->isNotEmpty()) {
+            // Tentukan URL tujuan Filament. Jika class UserResource bermasalah, di-hardcode ke string aman.
+            $targetUrl = class_exists(\App\Filament\Resources\Users\UserResource::class) 
+                ? \App\Filament\Resources\Users\UserResource::getUrl('index') 
+                : url('/admin/users');
 
-foreach ($admins as $admin) {
-    // Ambil URL halaman Filament yang dituju (misal: UserResource halaman Index atau Edit)
-    // Sesuaikan nama Resource Anda jika berbeda, misal: UserResource::getUrl('index')
-    $targetUrl = \App\Filament\Resources\Users\UserResource::getUrl('index'); 
+            // 2. Looping untuk memasukkan data notifikasi ke setiap admin
+            foreach ($adminIds as $adminId) {
+                // Generate UUID baru untuk kolom 'id' utama di tabel notifications
+                $notificationId = Str::uuid()->toString();
 
-    $admin->notifications()->create([
-        'id' => \Illuminate\Support\Str::uuid(),
-        'type' => 'Filament\\Notifications\\DatabaseNotification',
-        'data' => [
-            'title' => 'User Baru Mendaftar',
-            'body' => "{$user->name} telah mendaftar dan menunggu persetujuan.",
-            'icon' => 'heroicon-o-user-plus',
-            'color' => 'success',
-            'duration' => null,
-            'format' => 'filament',
-            
-            // Trik utama: Tambahkan array actions bawaan Filament agar muncul tombol klik
-            'actions' => [
-                [
-                    'name' => 'view_user',
-                    'label' => 'Lihat & Approve', // Tulisan di tombol notifikasi
-                    'url' => $targetUrl,          // Link tujuan ketika diklik
+                // Struktur data payload yang WAJIB dipahami oleh Filament v3
+                $filamentPayload = [
+                    'id' => $notificationId,
+                    'title' => 'User Baru Mendaftar',
+                    'body' => "{$user->name} telah mendaftar dan menunggu persetujuan.",
+                    'icon' => 'heroicon-o-user-plus',
                     'color' => 'success',
-                    'icon' => 'heroicon-m-eye',
-                    'shouldOpenInNewTab' => false,
-                    'view' => 'filament-notifications::actions.button-action',
-                ]
-            ],
-        ],
-        'read_at' => null,
-    ]);
-}
+                    'duration' => null,
+                    'format' => 'filament',
+                    'actions' => [
+                        [
+                            'name' => 'view_user',
+                            'label' => 'Lihat & Approve',
+                            'url' => $targetUrl,
+                            'color' => 'success',
+                            'icon' => 'heroicon-m-eye',
+                            'shouldOpenInNewTab' => false,
+                            'view' => 'filament-notifications::actions.button-action',
+                        ]
+                    ],
+                ];
 
-        // Auth::login($user);
+                // Query builder murni (100% bebas dari error Undefined Class/Type)
+                DB::table('notifications')->insert([
+                    'id' => $notificationId,
+                    'type' => 'Filament\\Notifications\\DatabaseNotification',
+                    'notifiable_type' => 'App\\Models\\User', // Sesuai namespace model User Anda
+                    'notifiable_id' => $adminId,
+                    'data' => json_encode($filamentPayload),
+                    'read_at' => null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+        // ===================================================================
+
+        // Auth::login($user); // Di-comment agar siswa tidak otomatis masuk sebelum di-approve
 
         return redirect()
-        ->route('login')
-        ->with('success', 'Registrasi berhasil. Akun Anda sedang menunggu persetujuan admin.');
+            ->route('login')
+            ->with('success', 'Registrasi berhasil. Akun Anda sedang menunggu persetujuan admin.');
     }
 }

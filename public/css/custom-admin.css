@@ -1,0 +1,235 @@
+/* ==========================================================================
+   SKILLSTORE PREMIUM HYBRID THEME (Filament v5 + Tailwind v4)
+   ========================================================================== */
+
+:root {
+    /* ☀️ --- LIGHT MODE: WHITISH BLUEISH THEME --- */
+    --bg-main: #f0f4f8;          
+    --sidebar-bg: #ffffff;       
+    --sidebar-border: #e2e8f0;
+    
+    /* Layered Shadow untuk Efek Timbul Nyata di Mode Terang */
+    --sidebar-shadow: 
+        1px 0 3px 0 rgba(15, 23, 42, 0.03),
+        4px 0 12px 0 rgba(15, 23, 42, 0.05),
+        12px 0 24px -4px rgba(15, 23, 42, 0.04); 
+        
+    --sidebar-hover: #f1f5f9;
+    --sidebar-text: #64748b;
+    
+    --topbar-bg: #ffffff;
+    --topbar-border: #e2e8f0;
+    
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --text-primary: #0f172a;     
+    --text-secondary: #475569;
+    
+    --primary: #2563eb;          
+}
+
+/* 🌙 --- DARK MODE: BG-950 SUPER DARK THEME --- */
+html.dark, .dark, [data-theme="dark"] {
+    --bg-main: #020617;          
+    --sidebar-bg: #0b1329;       
+    --sidebar-border: rgba(30, 41, 59, 0.7);   
+    
+    /* Layered Shadow Tebal Berwarna Hitam Pekat untuk Mode Gelap */
+    --sidebar-shadow: 
+        2px 0 8px 0 rgba(0, 0, 0, 0.4),
+        8px 0 24px 0 rgba(0, 0, 0, 0.5),
+        16px 0 40px -4px rgba(0, 0, 0, 0.6);
+        
+    --sidebar-hover: #1e293b;
+    --sidebar-text: #94a3b8;
+    
+    --topbar-bg: #0b1329;
+    --topbar-border: #1e293b;
+    
+    --card-bg: #090d16;
+    --card-border: #1e293b;
+    --text-primary: #f8fafc;     
+    --text-secondary: #94a3b8;
+}
+
+/* ==========================================================================
+   ⚙️ CORE STRUCTURE & BACKGROUNDS
+   ========================================================================== */
+html, body, .fi-layout, .fi-main {
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+}
+
+.fi-main {
+    background-color: var(--bg-main) !important;
+}
+
+.fi-header-heading, h1, .fi-ta-text, td, th {
+    color: var(--text-primary) !important;
+}
+.fi-breadcrumbs span, .fi-breadcrumbs a, th span {
+    color: var(--text-secondary) !important;
+}
+
+/* ==========================================================================
+   SIDEBAR COMPONENT (EFEK TIMBUL MAKSIMAL)
+   ========================================================================== */
+.fi-sidebar {
+    background-color: var(--sidebar-bg) !important;
+    border-right: 1px solid var(--sidebar-border) !important;
+    box-shadow: var(--sidebar-shadow) !important; 
+    z-index: 20 !important; 
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease !important;
+}
+
+.fi-sidebar-header {
+    background-color: var(--sidebar-bg) !important;
+    border-bottom: 1px solid var(--sidebar-border) !important;
+}
+
+.fi-logo, .fi-sidebar-header h1, .fi-sidebar-header span {
+    color: var(--text-primary) !important;
+    font-weight: 800 !important;
+}
+
+.fi-sidebar-group-label {
+    color: var(--text-secondary) !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em;
+}
+
+.fi-sidebar-item-button:not(.fi-sidebar-item-active *) span,
+.fi-sidebar-item-button:not(.fi-sidebar-item-active *) svg {
+    color: var(--sidebar-text) !important;
+}
+
+.fi-sidebar-item-button:hover {
+    background-color: var(--sidebar-hover) !important;
+    border-radius: 8px !important;
+}
+
+.fi-sidebar-item-active,
+.fi-sidebar-item-active .fi-sidebar-item-button {
+    background-color: var(--primary) !important;
+    border-radius: 8px !important;
+}
+.fi-sidebar-item-active span,
+.fi-sidebar-item-active svg {
+    color: #ffffff !important; 
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   TOPBAR, CARDS, TABLES, & INPUTS (EFEK TIMBUL KONTEN)
+   ========================================================================== */
+.fi-topbar {
+    background-color: var(--topbar-bg) !important;
+    border-bottom: 1px solid var(--topbar-border) !important;
+    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
+    z-index: 5;
+}
+
+/* 1. NETRALISIR KONTAINER UTAMA WIDGET AGAR TRANSPARAN */
+.fi-wi-stats-overview,
+.fi-wi-stats-overview .fi-section,
+.fi-wi-stats-overview .fi-section-content-ctn {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 2. ATUR JARAK GRID INTERNAL (BERDASARKAN INSPECT ELEMENT ANDA) */
+.fi-wi-stats-overview .fi-section-content {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: grid !important;
+    
+    /* Memaksa susunan menjadi 4 kolom sejajar per baris */
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 1.25rem !important; /* Jarak antar kotak statistik */
+}
+
+/* Responsive Breakpoint Layout Grid */
+@media (max-width: 1280px) {
+    .fi-wi-stats-overview .fi-section-content {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+@media (max-width: 640px) {
+    .fi-wi-stats-overview .fi-section-content {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+}
+
+/* 3. PAKSA KOTAK STATISTIK INDIVIDU AGAR MUNCUL SEBAGAI KARTU TERPISAH */
+.fi-wi-stats-overview-stat {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 14px !important;
+    padding: 1.25rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+    
+    /* Efek Bayangan Timbul Premium */
+    box-shadow: 
+        0 1px 3px 0 rgba(15, 23, 42, 0.03),
+        0 4px 12px -2px rgba(15, 23, 42, 0.05),
+        0 12px 24px -4px rgba(15, 23, 42, 0.04) !important;
+        
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Efek Hover Kursor */
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 
+        0 10px 15px -3px rgba(15, 23, 42, 0.06),
+        0 20px 32px -4px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* 4. DOKUMEN SECTION LAIN & TABEL (Spt. Tabel Kategori, Grafik, dll) */
+/* Menjaga komponen non-widget lainnya tetap memiliki background card standard */
+.fi-section:not(.fi-wi-stats-overview *), 
+.fi-ta, 
+.fi-ta-ctn,
+.fi-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 14px !important;
+    box-shadow: 
+        0 1px 3px 0 rgba(15, 23, 42, 0.03),
+        0 4px 12px -2px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* 🌙 KONDISI SHADOW KONTEN UNTUK DARK MODE */
+html.dark .fi-wi-stats-overview-stat,
+html.dark .fi-section:not(.fi-wi-stats-overview *), 
+html.dark .fi-ta, 
+html.dark .fi-ta-ctn,
+html.dark .fi-card {
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.4),
+        0 14px 28px
+}
+
+/* Penyelarasan internal element tabel */
+table, tr, td {
+    background-color: var(--card-bg) !important;
+    border-color: var(--sidebar-border) !important;
+}
+
+/* Input Form */
+input, textarea, select, .fi-input-wrp {
+    background-color: var(--card-bg) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--card-border) !important;
+    border-radius: 8px !important;
+}
+
+.fi-sidebar::-webkit-scrollbar { width: 5px; }
+.fi-sidebar::-webkit-scrollbar-thumb { background: var(--sidebar-border); border-radius: 999px; }

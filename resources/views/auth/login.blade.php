@@ -15,7 +15,7 @@
 
 @section('content')
 <div class="min-h-screen bg-slate-50 dark:bg-slate-950/60 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl w-full bg-white dark:bg-slate-950 transition-colors duration-300 border border-slate-100 rounded-3xl shadow-xl shadow-slate-100/40 overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <div class="max-w-4xl w-full bg-white dark:bg-slate-950 transition-colors duration-300 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
         
         <div class="hidden md:flex flex-col justify-between p-10 bg-gradient-to-br from-blue-600 to-blue-700 text-white relative overflow-hidden">
             <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
@@ -85,7 +85,7 @@
         </div>
 
         <div class="pt-2 space-y-4">
-            <button type="submit" class="flex items-center justify-center w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-md shadow-blue-500/10">
+            <button type="submit" class="flex items-center justify-center w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-600/40 transform hover:-translate-y-0.5 duration-150">
                 Masuk Sekarang
             </button>
             

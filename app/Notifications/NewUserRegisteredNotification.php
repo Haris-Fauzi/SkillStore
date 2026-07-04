@@ -6,31 +6,32 @@ use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
-class NewUserRegisteredNotification extends Notification
+class NewUserRegistered extends Notification
 {
     use Queueable;
 
-    public function __construct(
-        public User $user,
-    ) {}
+    protected $user;
 
-    public function via(object $notifiable): array
+    // Ambil data user yang baru mendaftar
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    // Tentukan channel notifikasi (kita pakai database)
+    public function via($notifiable)
     {
         return ['database'];
     }
 
-    public function toArray(object $notifiable): array
+    // Data yang akan disimpan ke kolom `data` di tabel notifications
+    public function toArray($notifiable)
     {
         return [
-            // Key di bawah ini adalah format WAJIB standar Filament
-            'title' => 'User Baru Mendaftar',
-            'body' => "{$this->user->name} telah mendaftar dan menunggu persetujuan.",
-            'icon' => 'heroicon-o-user-plus', // Opsional: Beri icon biar keren
-            'color' => 'success',             // Opsional: Warna indikator (success, info, warning, danger)
-            
-            // Data tambahan kustom Anda tetap boleh dimasukkan di sini jika butuh
+            'message' => 'Ada pengguna baru mendaftar: ' . $this->user->name,
             'user_id' => $this->user->id,
-            'type' => 'new_user',
+            'email' => $this->user->email,
+            'type' => 'registration'
         ];
     }
 }

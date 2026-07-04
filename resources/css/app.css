@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ==========================================================================
+   🎨 PREMIUM PROFESSIONAL SIDEBAR STYLING FOR FILAMENT
+   ========================================================================== */
+
+/* --- 1. MODE TERANG (LIGHT MODE) --- */
+/* Membuat sidebar berwarna Deep Slate yang elegan & tegas */
+.fi-sidebar {
+    background-color: #0f172a !important; /* Slate 900 */
+    border-right: 1px solid #1e293b !important; /* Slate 800 */
+}
+
+/* Memastikan background atas teks "SkillStore Admin" ikut menyatu gelap */
+div[class*="fi-sidebar-header"] {
+    background-color: #0f172a !important;
+}
+
+/* Mengubah warna teks judul menu utama agar kontras di latar belakang gelap */
+.fi-sidebar-group-label,
+.fi-sidebar-nav-label {
+    color: #94a3b8 !important; /* Slate 400 */
+}
+
+/* Efek saat menu di-hover (sorot kursor) */
+.fi-sidebar-item-button:hover {
+    background-color: #1e293b !important; /* Slate 800 */
+}
+
+/* Warna item menu yang sedang aktif/dipilih */
+.fi-sidebar-item-active .fi-sidebar-item-button {
+    background-color: #2563eb !important; /* Blue 600 (Aksen utama Anda) */
+}
+.fi-sidebar-item-active .fi-sidebar-item-button * {
+    color: #ffffff !important;
+}
+
+/* Warna teks nama brand "SkillStore Admin" */
+div[class*="fi-sidebar-header"] span,
+div[class*="fi-sidebar-header"] h1 {
+    color: #ffffff !important;
+}
+
+
+/* --- 2. AREA KONTEN UTAMA (BODY) --- */
+/* Mengubah background luar (konten utama) agar terlihat kontras terpisah dengan sidebar */
+.fi-main {
+    background-color: #f8fafc !important; /* Slate 50 (Abu-abu sangat bersih) */
+}
+
+
+/* --- 3. ADJUSTMENT UNTUK MODE GELAP (DARK MODE) SEJATI --- */
+.dark .fi-sidebar {
+    background-color: #020617 !important; /* Slate 950 (Lebih pekat dari body) */
+    border-right: 1px solid #1e293b !important;
+}
+.dark .fi-main {
+    background-color: #0b1329 !important; /* Konten utama sedikit lebih terang di dark mode */
+}

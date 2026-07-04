@@ -7,29 +7,27 @@
 
         <title>{{ config('app.name', 'SkillStore') }}</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <link rel="icon" type="image/svg+xml" href="{{ asset('images/icon S.svg') }}">
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        {{-- PERUBAHAN: Mengubah bg-gray-100 menjadi bg-slate-50/50 dan dark mode ke slate-950 --}}
+        <div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-[1400px] mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{-- PERUBAHAN: Menyesuaikan border dan background header agar seirama dengan Workspace --}}
+                <header class="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/80 shadow-sm">
+                    <div class="max-w-[1400px] mx-auto py-5 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
 
-            <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>

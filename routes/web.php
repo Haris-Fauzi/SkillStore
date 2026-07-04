@@ -28,8 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/student-profile', [StudentProfileController::class, 'edit'])
         ->name('student-profile.edit');
 
-    Route::put('/student-profile', [StudentProfileController::class, 'update'])
-        ->name('student-profile.update');
+    Route::match(['put', 'patch'], '/student-profile', [StudentProfileController::class, 'update'])
+    ->name('student-profile.update');
     
     Route::get('/dashboard/projects', [ProjectController::class, 'index'])
         ->name('dashboard.projects.index');
